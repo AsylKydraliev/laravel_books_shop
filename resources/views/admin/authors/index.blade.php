@@ -15,7 +15,7 @@
             @endif
 
             <div class="col mt-4">
-                <table class="table">
+                <table class="table align-middle">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -39,10 +39,10 @@
                                 >
                             </td>
                             <td>
-                                <a href="{{ '/' }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('authors.edit', ['author' => $author]) }}" class="btn btn-warning">Edit</a>
 
                                 <form
-                                    action="{{ '/' }}"
+                                    action="{{ route('authors.destroy', ['author' => $author]) }}"
                                     method="post"
                                     class="d-inline-block"
                                 >

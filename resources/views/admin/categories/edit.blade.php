@@ -5,11 +5,13 @@
         <a href="{{ route('categories.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
         <div class="row">
             <form
-                action="{{ route('categories.store') }}"
+                action="{{ route('categories.update', ['category' => $category]) }}"
                 method="post"
             >
                 @csrf
-                <h4>Create new category</h4>
+                @method('PUT')
+
+                <h4>Edit category</h4>
                 <hr>
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
@@ -17,7 +19,7 @@
                         type="text"
                         id="title"
                         name="title"
-                        value="{{ old('title') }}"
+                        value="{{ $category->title }}"
                         class="form-control @error('title') is-invalid @enderror"
                     />
                     @error('title')
@@ -32,13 +34,13 @@
                         name="description"
                         class="form-control
                         @error('description') is-invalid @enderror"
-                    >{{ old('description') }}</textarea>
+                    >{{ $category->description }}</textarea>
                     @error('description')
                      <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">Edit</button>
             </form>
         </div>
     </div>

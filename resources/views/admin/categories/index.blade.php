@@ -4,9 +4,15 @@
     <div class="container">
         <div class="row">
             <div>
-                <h3>Genres</h3>
-                <a href="{{ route('categories.create') }}" class="btn btn-outline-primary">Add genre</a>
+                <h3>Categories</h3>
+                <a href="{{ route('categories.create') }}" class="btn btn-outline-primary">Add category</a>
             </div>
+
+            @if(session('status'))
+                <div class="alert alert-success my-3">
+                    {{ session('status') }}
+                </div>
+            @endif
 
             <div class="col">
                 <table class="table">
@@ -19,24 +25,27 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($categories as $category)
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
+                        <th scope="row">{{ $category->id }}</th>
+                        <td>{{ $category->title }}</td>
+                        <td>{{ $category->description }}</td>
                         <td>
-                            <a href="{{ '/' }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('categories.edit', ['category' => $category]) }}" class="btn btn-warning">Edit</a>
 
                             <form
-                                action="{{ '/' }}"
+                                action="{{ route('categories.destroy', ['category' => $category]) }}"
                                 method="post"
                                 class="d-inline-block"
                             >
                                 @csrf
                                 @method('delete')
+
                                 <button class="btn btn-danger" type="submit">Delete</button>
                             </form>
                         </td>
                     </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

@@ -14,7 +14,6 @@ class Author extends Model
         'id',
         'name',
         'description',
-        'price',
         'image',
     ];
 

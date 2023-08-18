@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class CategoryController extends Controller
 {
@@ -15,10 +16,11 @@ class CategoryController extends Controller
      */
     public function index(): \Illuminate\Foundation\Application|View|Factory|Application
     {
-        $genres = Category::all();
+        $categories = Category::all();
+
         return view(
             'admin.categories.index',
-                compact('genres')
+                compact('categories')
         );
     }
 
@@ -31,42 +33,52 @@ class CategoryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param CategoryRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request): RedirectResponse
     {
-        //
+        $category = new Category($request->all());
+        $category->save();
+
+        return redirect()
+            ->route('categories.index')
+            ->with('status', "Category: $category->title successfully created");
     }
 
     /**
-     * Display the specified resource.
+     * @param Category $category
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
      */
-    public function show(Category $category)
+    public function edit(Category $category): \Illuminate\Foundation\Application|View|Factory|Application
     {
-        //
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @param CategoryRequest $request
+     * @param Category $category
+     * @return RedirectResponse
      */
-    public function edit(Category $category)
+    public function update(CategoryRequest $request, Category $category): RedirectResponse
     {
-        //
+        $category->update($request->all());
+
+        return redirect()
+            ->route('categories.index')
+            ->with('status', "Category: $category->title updated successfully");
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param Category $category
+     * @return RedirectResponse
      */
-    public function update(Request $request, Category $category)
+    public function destroy(Category $category): RedirectResponse
     {
-        //
-    }
+        $category->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Category $category)
-    {
-        //
+        return redirect()
+            ->route('categories.index')
+            ->with('status', "Category $category->title updated successfully");
     }
 }

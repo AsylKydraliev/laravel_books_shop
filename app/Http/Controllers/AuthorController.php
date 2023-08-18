@@ -8,7 +8,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
@@ -55,34 +54,46 @@ class AuthorController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @param Author $author
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
      */
-    public function show(Author $author)
+    public function edit(Author $author): \Illuminate\Foundation\Application|View|Factory|Application
     {
-        //
+        return view('admin.authors.edit', compact('author'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @param AuthorRequest $request
+     * @param Author $author
+     * @return RedirectResponse
      */
-    public function edit(Author $author)
+    public function update(AuthorRequest $request, Author $author): RedirectResponse
     {
-        //
+        $data = $request->all();
+        $file = $request->file('image');
+
+        if($file) {
+            $path = $file->store('images', 'public');
+            $data['image'] = $path;
+        }
+
+        $author->update($data);
+
+        return redirect()
+            ->route('authors.index')
+            ->with('status', "Author $author->name updated successfully");
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param Author $author
+     * @return RedirectResponse
      */
-    public function update(Request $request, Author $author)
+    public function destroy(Author $author): RedirectResponse
     {
-        //
-    }
+        $author->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Author $author)
-    {
-        //
+        return redirect()
+            ->route('authors.index')
+            ->with('status', "Author $author->name deleted successfully");
     }
 }

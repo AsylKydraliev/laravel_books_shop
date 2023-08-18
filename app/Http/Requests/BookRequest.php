@@ -25,8 +25,18 @@ class BookRequest extends FormRequest
             'title' => 'required',
             'description' => 'required',
             'image' => 'required|image',
-            'author_id' => 'required',
-            'category_id' => 'required'
+            'price' => 'required',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function messages(): array
+    {
+        return [
+            'author_id.required' => 'Please, select author',
+            'category_id.required' => 'Please, select category',
         ];
     }
 }

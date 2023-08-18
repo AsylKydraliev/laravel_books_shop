@@ -14,8 +14,16 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('author_id')->constrained()->onUpdate('cascade')->onDelete('cascade');;
-            $table->foreignId('category_id')->constrained()->nullOnDelete();
+            $table->unsignedBigInteger('author_id')->nullable();
+            $table->foreign('author_id')
+                ->references('id')->on('authors')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')
+                ->references('id')->on('categories')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
             $table->string('image');
             $table->timestamps();
         });

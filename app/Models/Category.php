@@ -10,6 +10,12 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'id',
+        'title',
+        'description',
+    ];
+
     /**
      * @return HasMany
      */

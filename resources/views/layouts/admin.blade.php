@@ -10,22 +10,22 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body class="antialiased">
-<nav class="navbar navbar-expand-lg bg-body-tertiary py-3">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('index') }}">Shop</a>
+<nav class="navbar navbar-expand-lg bg-body-secondary py-3 mb-5">
+    <div class="container">
+        <a class="navbar-brand" href="{{ route('books.index') }}">Shop</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item {{ Request::is('/') ? 'fw-bold' : '' }}">
-                    <a class="nav-link" href="{{ route('index') }}">Books</a>
+                <li class="nav-item {{ Request::is('/books') ? 'fw-bold' : '' }}">
+                    <a class="nav-link" href="{{ route('books.index') }}">Books</a>
                 </li>
-                <li class="nav-item {{ Request::is('authors') ? 'fw-bold' : '' }}">
+                <li class="nav-item {{ Request::is('/authors') ? 'fw-bold' : '' }}">
                     <a class="nav-link" href="{{ route('authors.index') }}">Authors</a>
                 </li>
-                <li class="nav-item {{ Request::is('categories') ? 'fw-bold' : '' }}">
-                    <a class="nav-link" href="{{ route('categories.index') }}">Genres</a>
+                <li class="nav-item {{ Request::is('/categories') ? 'fw-bold' : '' }}">
+                    <a class="nav-link" href="{{ route('categories.index') }}">Categories</a>
                 </li>
             </ul>
             <form class="d-flex" role="search">

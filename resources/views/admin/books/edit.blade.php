@@ -5,12 +5,14 @@
         <a href="{{ route('books.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
         <div class="row">
             <form
-                action="{{ route('books.store') }}"
+                action="{{ route('books.update', ['book' => $book]) }}"
                 method="post"
                 enctype="multipart/form-data"
             >
                 @csrf
-                <h4>Create new book</h4>
+                @method('PUT')
+
+                <h4>Edit book</h4>
                 <hr>
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
@@ -18,7 +20,7 @@
                         type="text"
                         id="title"
                         name="title"
-                        value="{{ old('title') }}"
+                        value="{{ $book->title }}"
                         class="form-control @error('title') is-invalid @enderror"
                     />
                     @error('title')
@@ -32,7 +34,7 @@
                         id="description"
                         name="description"
                         class="form-control @error('description') is-invalid @enderror"
-                    >{{ old('description') }}</textarea>
+                    >{{ $book->description }}</textarea>
                     @error('description')
                     <strong class="text-danger">{{ $message  }}</strong>
                     @enderror
@@ -44,7 +46,7 @@
                         type="number"
                         id="price"
                         name="price"
-                        value="{{ old('price') }}"
+                        value="{{ $book->price }}"
                         class="form-control @error('price') is-invalid @enderror"
                     />
                     @error('price')
@@ -53,12 +55,17 @@
                 </div>
 
                 <div class="mb-3">
+                    <img
+                        class="mb-2 d-block"
+                        width="100"
+                        src="{{ asset("/storage/$book->image") }}"
+                        alt="{{ $book->title }}"
+                    >
                     <label for="file" class="form-label">Image</label>
                     <input
                         type="file"
                         id="file"
                         name="image"
-                        value="{{ old('image') }}"
                         class="form-control @error('image') is-invalid @enderror"
                     >
                     @error('image')
@@ -75,9 +82,13 @@
                         name="author_id"
                         class="form-select @error('author_id') is-invalid @enderror"
                     >
-                        <option value="" disabled selected>Select author</option>
                         @foreach($authors as $author)
-                            <option value="{{ $author->id }}">{{ $author->name }}</option>
+                            <option
+                                value="{{ $author->id }}"
+                                selected="{{ $book->author->id == $author->id }}"
+                            >
+                                {{ $author->name }}
+                            </option>
                         @endforeach
                     </select>
                     @error('author_id')
@@ -94,9 +105,13 @@
                         name="category_id"
                         class="form-select @error('category_id') is-invalid @enderror"
                     >
-                        <option value="" disabled selected>Select category</option>
                         @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->title }}</option>
+                            <option
+                                value="{{ $category->id }}"
+                                selected="{{ $book->category->id == $category->id }}"
+                            >
+                                {{ $category->title }}
+                            </option>
                         @endforeach
                     </select>
                     @error('category_id')
@@ -106,7 +121,7 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">Save</button>
             </form>
         </div>
     </div>
