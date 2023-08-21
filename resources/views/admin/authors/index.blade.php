@@ -32,14 +32,18 @@
                             <td>{{ $author->name }}</td>
                             <td>{{ $author->description }}</td>
                             <td>
+                                @if($author->image)
                                 <img
                                     width="100"
-                                    src="{{ asset("/storage/$author->image") }}"
+                                    src="{{ $author->image }}"
                                     alt="{{$author->name}}"
                                 >
+                                @else
+                                    No image
+                                @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.authors.edit', ['author' => $author]) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('admin.authors.edit', ['author' => $author]) }}" class="btn btn-warning d-block mb-1">Edit</a>
 
                                 <form
                                     action="{{ route('admin.authors.destroy', ['author' => $author]) }}"
@@ -55,6 +59,12 @@
                     @endforeach
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <div class="row my-4 justify-content-center">
+            <div class="col-md-auto">
+                {{ $authors->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>

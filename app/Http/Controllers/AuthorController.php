@@ -16,7 +16,7 @@ class AuthorController extends Controller
      */
     public function index(): \Illuminate\Foundation\Application|View|Factory|Application
     {
-        $authors = Author::all();
+        $authors = Author::paginate(10);
         return view(
             'admin.authors.index',
             compact('authors')

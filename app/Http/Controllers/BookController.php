@@ -18,7 +18,7 @@ class BookController extends Controller
      */
     public function index(): \Illuminate\Foundation\Application|View|Factory|Application
     {
-        $books = Book::query()->with(['category', 'author'])->get();
+        $books = Book::with(['category', 'author'])->paginate(10);
         // пагинацию
         // factories seeders
         return view(
@@ -47,7 +47,7 @@ class BookController extends Controller
      */
     public function store(BookRequest $request): RedirectResponse
     {
-        $data = $request->validated();
+        $data = $request->all();
         $file = $request->file('image');
 
         if ($file) {

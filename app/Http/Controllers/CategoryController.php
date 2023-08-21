@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index(): \Illuminate\Foundation\Application|View|Factory|Application
     {
-        $categories = Category::all();
+        $categories = Category::paginate(10);
 
         return view(
             'admin.categories.index',

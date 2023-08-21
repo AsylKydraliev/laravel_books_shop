@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <a href="{{ route('admin.books.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
+        <a href="{{ url()->previous() }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
         <div class="row">
             <form
                 action="{{ route('admin.books.store') }}"

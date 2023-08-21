@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <a href="{{ route('admin.authors.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
+        <a href="{{ url()->previous() }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
         <div class="row">
             <form
                 action="{{ route('admin.authors.update', ['author' => $author]) }}"
@@ -41,12 +41,16 @@
                 </div>
 
                 <div class="mb-3">
-                    <img
-                        class="mb-2 d-block"
-                        width="100"
-                        src="{{ asset("/storage/$author->image") }}"
-                        alt="{{ $author->name }}"
-                    >
+
+                    @if($author->image)
+                        <img
+                            class="mb-2 d-block"
+                            width="100"
+                            src="{{ $author->image }}"
+                            alt="{{ $author->name }}"
+                        >
+                    @endif
+
                     <label for="file" class="form-label">Image</label>
                     <input class="form-control" type="file" id="file" name="image"/>
                     @error('image')

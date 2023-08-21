@@ -24,7 +24,7 @@ class BookRequest extends FormRequest
         return [
             'title' => 'required',
             'description' => 'required',
-            'image' => 'required|image',
+            'image' => 'image',
             'price' => 'required',
         ];
     }

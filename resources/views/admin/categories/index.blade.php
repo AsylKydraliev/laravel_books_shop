@@ -31,7 +31,7 @@
                         <td>{{ $category->title }}</td>
                         <td>{{ $category->description }}</td>
                         <td>
-                            <a href="{{ route('admin.categories.edit', ['category' => $category]) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('admin.categories.edit', ['category' => $category]) }}" class="btn btn-warning d-block mb-1">Edit</a>
 
                             <form
                                 action="{{ route('admin.categories.destroy', ['category' => $category]) }}"
@@ -48,6 +48,12 @@
                     @endforeach
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <div class="row my-4 justify-content-center">
+            <div class="col-md-auto">
+                {{ $categories->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>

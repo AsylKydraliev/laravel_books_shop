@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container">
+    <div class="container mb-5">
         <div class="row">
             <div>
                 <h3>Books</h3>
@@ -38,19 +38,23 @@
                         <td>{{ $book->category->title ?? 'not category' }}</td>
                         <td>{{ $book->author->name ?? 'not author' }}</td>
                         <td>
-                            <img
-                                width="100"
-                                src="{{ asset("/storage/$book->image") }}"
-                                alt="{{ $book->title }}"
-                            >
+                            @if($book->image)
+                                <img
+                                    width="100"
+                                    src="{{ $book->image }}"
+                                    alt="{{ $book->title }}"
+                                />
+                            @else
+                                No image
+                            @endif
                         </td>
                         <td>
-                            <a href="{{ route('admin.books.edit', ['book' => $book]) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('admin.books.edit', ['book' => $book]) }}" class="btn btn-warning d-block">Edit</a>
 
                             <form
                                 action="{{ route('admin.books.destroy', ['book' => $book]) }}"
                                 method="post"
-                                class="d-inline-block"
+                                class="d-inline-block mt-1"
                             >
                                 @csrf
                                 @method('delete')
@@ -62,6 +66,12 @@
                     @endforeach
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <div class="row my-4 justify-content-center">
+            <div class="col-md-auto">
+                {{ $books->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>

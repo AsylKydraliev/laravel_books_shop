@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <a href="{{ route('admin.books.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
+        <a href="{{ url()->previous() }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
         <div class="row">
             <form
                 action="{{ route('admin.books.update', ['book' => $book]) }}"
@@ -55,12 +55,14 @@
                 </div>
 
                 <div class="mb-3">
+                    @if($book->image)
                     <img
                         class="mb-2 d-block"
                         width="100"
-                        src="{{ asset("/storage/$book->image") }}"
+                        src="{{ $book->image }}"
                         alt="{{ $book->title }}"
                     >
+                    @endif
                     <label for="file" class="form-label">Image</label>
                     <input
                         type="file"
@@ -83,7 +85,10 @@
                         class="form-select @error('author_id') is-invalid @enderror"
                     >
                         @foreach($authors as $author)
-                            <option>
+                            <option
+                                @if($book->author && $author->id == $book->author->id) selected @endif
+                                value="{{ $author->id }}"
+                            >
                                 {{ $author->name }}
                             </option>
                         @endforeach
@@ -104,7 +109,8 @@
                     >
                         @foreach($categories as $category)
                             <option
-                                value="{{ $category->id }}" {{ $book->category ? 'selected' : '' }}
+                                @if($book->category && $category->id == $book->category->id) selected @endif
+                            value="{{ $category->id }}"
                             >
                                 {{ $category->title }}
                             </option>
