@@ -49,7 +49,7 @@ class AuthorController extends Controller
         $author->save();
 
         return redirect()
-            ->route('authors.index')
+            ->route('admin.authors.index')
             ->with('status', "Author: $author->name successfully created");
     }
 
@@ -80,7 +80,7 @@ class AuthorController extends Controller
         $author->update($data);
 
         return redirect()
-            ->route('authors.index')
+            ->route('admin.authors.index')
             ->with('status', "Author $author->name updated successfully");
     }
 
@@ -93,7 +93,7 @@ class AuthorController extends Controller
         $author->delete();
 
         return redirect()
-            ->route('authors.index')
+            ->route('admin.authors.index')
             ->with('status', "Author $author->name deleted successfully");
     }
 }

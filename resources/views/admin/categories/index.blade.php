@@ -5,7 +5,7 @@
         <div class="row">
             <div>
                 <h3>Categories</h3>
-                <a href="{{ route('categories.create') }}" class="btn btn-outline-primary">Add category</a>
+                <a href="{{ route('admin.categories.create') }}" class="btn btn-outline-primary">Add category</a>
             </div>
 
             @if(session('status'))
@@ -31,10 +31,10 @@
                         <td>{{ $category->title }}</td>
                         <td>{{ $category->description }}</td>
                         <td>
-                            <a href="{{ route('categories.edit', ['category' => $category]) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('admin.categories.edit', ['category' => $category]) }}" class="btn btn-warning">Edit</a>
 
                             <form
-                                action="{{ route('categories.destroy', ['category' => $category]) }}"
+                                action="{{ route('admin.categories.destroy', ['category' => $category]) }}"
                                 method="post"
                                 class="d-inline-block"
                             >

@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container">
-        <a href="{{ route('books.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
+        <a href="{{ route('admin.books.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
         <div class="row">
             <form
-                action="{{ route('books.update', ['book' => $book]) }}"
+                action="{{ route('admin.books.update', ['book' => $book]) }}"
                 method="post"
                 enctype="multipart/form-data"
             >
@@ -83,10 +83,7 @@
                         class="form-select @error('author_id') is-invalid @enderror"
                     >
                         @foreach($authors as $author)
-                            <option
-                                value="{{ $author->id }}"
-                                selected="{{ $book->author->id == $author->id }}"
-                            >
+                            <option>
                                 {{ $author->name }}
                             </option>
                         @endforeach
@@ -99,7 +96,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="category" class="form-label">Genre</label>
+                    <label for="category" class="form-label">Category</label>
                     <select
                         aria-label="category"
                         name="category_id"
@@ -107,8 +104,7 @@
                     >
                         @foreach($categories as $category)
                             <option
-                                value="{{ $category->id }}"
-                                selected="{{ $book->category->id == $category->id }}"
+                                value="{{ $category->id }}" {{ $book->category ? 'selected' : '' }}
                             >
                                 {{ $category->title }}
                             </option>

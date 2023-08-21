@@ -5,7 +5,7 @@
         <div class="row">
             <div>
                 <h3>Authors</h3>
-                <a href="{{ route('authors.create') }}" class="btn btn-outline-primary">Add author</a>
+                <a href="{{ route('admin.authors.create') }}" class="btn btn-outline-primary">Add author</a>
             </div>
 
             @if(session('status'))
@@ -39,10 +39,10 @@
                                 >
                             </td>
                             <td>
-                                <a href="{{ route('authors.edit', ['author' => $author]) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('admin.authors.edit', ['author' => $author]) }}" class="btn btn-warning">Edit</a>
 
                                 <form
-                                    action="{{ route('authors.destroy', ['author' => $author]) }}"
+                                    action="{{ route('admin.authors.destroy', ['author' => $author]) }}"
                                     method="post"
                                     class="d-inline-block"
                                 >

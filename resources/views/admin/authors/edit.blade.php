@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container">
-        <a href="{{ route('authors.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
+        <a href="{{ route('admin.authors.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
         <div class="row">
             <form
-                action="{{ route('authors.update', ['author' => $author]) }}"
+                action="{{ route('admin.authors.update', ['author' => $author]) }}"
                 method="post"
                 enctype="multipart/form-data"
             >

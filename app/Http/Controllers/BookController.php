@@ -18,7 +18,9 @@ class BookController extends Controller
      */
     public function index(): \Illuminate\Foundation\Application|View|Factory|Application
     {
-        $books = Book::all();
+        $books = Book::query()->with(['category', 'author'])->get();
+        // пагинацию
+        // factories seeders
         return view(
             'admin.books.index',
             compact('books')
@@ -45,7 +47,7 @@ class BookController extends Controller
      */
     public function store(BookRequest $request): RedirectResponse
     {
-        $data = $request->all();
+        $data = $request->validated();
         $file = $request->file('image');
 
         if ($file) {
@@ -57,7 +59,7 @@ class BookController extends Controller
         $book->save();
 
         return redirect()
-            ->route('books.index')
+            ->route('admin.books.index')
             ->with('status', "Book: $book->title successfully created");
     }
 
@@ -96,7 +98,7 @@ class BookController extends Controller
         $book->update($data);
 
         return redirect()
-            ->route('books.index')
+            ->route('admin.books.index')
             ->with('status', "Book $book->title updated successfully");
     }
 
@@ -109,7 +111,7 @@ class BookController extends Controller
         $book->delete();
 
         return redirect()
-            ->route('books.index')
+            ->route('admin.books.index')
             ->with('status', "Book $book->title deleted successfully");
     }
 }

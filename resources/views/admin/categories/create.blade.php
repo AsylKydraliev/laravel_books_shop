@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container">
-        <a href="{{ route('categories.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
+        <a href="{{ route('admin.categories.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
         <div class="row">
             <form
-                action="{{ route('categories.store') }}"
+                action="{{ route('admin.categories.store') }}"
                 method="post"
             >
                 @csrf

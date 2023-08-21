@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container">
-        <a href="{{ route('books.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
+        <a href="{{ route('admin.books.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
         <div class="row">
             <form
-                action="{{ route('books.store') }}"
+                action="{{ route('admin.books.store') }}"
                 method="post"
                 enctype="multipart/form-data"
             >
