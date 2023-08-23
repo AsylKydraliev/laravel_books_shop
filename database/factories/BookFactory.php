@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Author;
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,6 +12,10 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class BookFactory extends Factory
 {
+    // show books
+    // edit books add, delete
+    // filter
+    // component
     /**
      * @var string
      */
@@ -25,10 +31,9 @@ class BookFactory extends Factory
         return [
             'title' => $this->faker->name,
             'description' => $this->faker->text,
-            'price' => $this->faker->randomFloat($min=350),
+            'price' => $this->faker->numberBetween(100,3000),
             'image' => $this->faker->imageUrl(400, 300, 'abstract'),
-            'category_id' => rand(1, 50),
-            'author_id' => rand(1, 50),
+            'author_id' => Author::all()->random(),
         ];
     }
 }

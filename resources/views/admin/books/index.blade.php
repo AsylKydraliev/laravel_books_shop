@@ -41,7 +41,7 @@
                             @if($book->image)
                                 <img
                                     width="100"
-                                    src="{{ $book->image }}"
+                                    src="{{ str_contains($book->image, 'images') ? "/storage/$book->image" : $book->image }}"
                                     alt="{{ $book->title }}"
                                 />
                             @else
@@ -65,13 +65,12 @@
                     </tr>
                     @endforeach
                     </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="8">{{ $books->links() }}</th>
+                            </tr>
+                        </tfoot>
                 </table>
-            </div>
-        </div>
-
-        <div class="row my-4 justify-content-center">
-            <div class="col-md-auto">
-                {{ $books->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>

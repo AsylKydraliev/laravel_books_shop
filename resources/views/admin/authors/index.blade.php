@@ -35,7 +35,7 @@
                                 @if($author->image)
                                 <img
                                     width="100"
-                                    src="{{ $author->image }}"
+                                    src="{{ str_contains($author->image, 'images') ? "/storage/$author->image" : $author->image }}"
                                     alt="{{$author->name}}"
                                 >
                                 @else
@@ -58,13 +58,13 @@
                         </tr>
                     @endforeach
                     </tbody>
-                </table>
-            </div>
-        </div>
 
-        <div class="row my-4 justify-content-center">
-            <div class="col-md-auto">
-                {{ $authors->links('pagination::bootstrap-4') }}
+                    <tfoot>
+                        <tr>
+                            <th colspan="8">{{ $authors->links() }}</th>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>

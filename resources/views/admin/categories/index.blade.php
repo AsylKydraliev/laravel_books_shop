@@ -47,13 +47,13 @@
                     </tr>
                     @endforeach
                     </tbody>
-                </table>
-            </div>
-        </div>
 
-        <div class="row my-4 justify-content-center">
-            <div class="col-md-auto">
-                {{ $categories->links('pagination::bootstrap-4') }}
+                    <tfoot>
+                        <tr>
+                            <th colspan="8">{{ $categories->links() }}</th>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>

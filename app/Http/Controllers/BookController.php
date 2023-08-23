@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BookRequest;
+use App\Http\Requests\StoreBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
@@ -10,6 +11,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -18,9 +20,10 @@ class BookController extends Controller
      */
     public function index(): \Illuminate\Foundation\Application|View|Factory|Application
     {
-        $books = Book::with(['category', 'author'])->paginate(10);
-        // пагинацию
-        // factories seeders
+        $books = Book::query()
+            ->with(['category', 'author'])
+            ->paginate(10);
+
         return view(
             'admin.books.index',
             compact('books')
@@ -42,10 +45,10 @@ class BookController extends Controller
     }
 
     /**
-     * @param BookRequest $request
+     * @param StoreBookRequest $request
      * @return RedirectResponse
      */
-    public function store(BookRequest $request): RedirectResponse
+    public function store(StoreBookRequest $request): RedirectResponse
     {
         $data = $request->all();
         $file = $request->file('image');
@@ -81,11 +84,11 @@ class BookController extends Controller
     }
 
     /**
-     * @param BookRequest $request
+     * @param UpdateBookRequest $request
      * @param Book $book
      * @return RedirectResponse
      */
-    public function update(BookRequest $request, Book $book): RedirectResponse
+    public function update(UpdateBookRequest $request, Book $book): RedirectResponse
     {
         $data = $request->all();
         $file = $request->file('image');

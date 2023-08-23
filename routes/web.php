@@ -22,4 +22,7 @@ Route::middleware('auth.basic.once')->prefix('admin')->name('admin.')->group(fun
     Route::resource('authors', AuthorController::class);
 });
 
+Route::delete('/admin/books/destroy-multiple', [BookController::class, 'destroyMultiple'])->name('destroyMultiple');
+
+
 

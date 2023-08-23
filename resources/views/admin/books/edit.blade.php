@@ -59,7 +59,7 @@
                     <img
                         class="mb-2 d-block"
                         width="100"
-                        src="{{ $book->image }}"
+                        src="{{ str_contains($book->image, 'images') ? "/storage/$book->image" : $book->image }}"
                         alt="{{ $book->title }}"
                     >
                     @endif
