@@ -91,7 +91,6 @@
                                         </select>
                                     </th>
                                     <th scope="col">
-                                        {{--                                        <input type="hidden" name="new_book_ids[]" />--}}
                                         Actions
                                         <button type="button" class="btn btn-light add-book">
                                             <i class="bi bi-plus-lg fs-4"></i>
@@ -141,7 +140,7 @@
                                             </select>
                                         </td>
 
-                                        <input type="hidden" name="book_ids[]" value="{{ $book->id ?? 0 }}"/>
+                                        <input type="hidden" name="book_ids[]" value="{{ $book->id ?? 0 }}" />
 
                                         <td>
                                             <button class="btn btn-light delete-book">

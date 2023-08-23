@@ -69,52 +69,43 @@ class CategoryController extends Controller
     {
         $booksFromForm = $request->get('book_ids');
 
-        $bookTitles = $request->input('book_titles');
-        $bookDescriptions = $request->input('book_descriptions');
-        $bookPrices = $request->input('book_prices');
-        $bookAuthors = $request->input('book_authors');
-
         if(in_array(0, $booksFromForm)) {
+            $bookTitles = $request->input('book_titles');
+            $bookDescriptions = $request->input('book_descriptions');
+            $bookPrices = $request->input('book_prices');
+            $bookAuthors = $request->input('book_authors');
+
             foreach ($bookTitles as $key => $title) {
                 $description = $bookDescriptions[$key];
                 $price = $bookPrices[$key];
                 $authorId = $bookAuthors[$key];
 
-                $book = new Book([
+                $data = [
                     'title' => $title,
                     'description' => $description,
                     'price' => intval($price),
                     'author_id' => intval($authorId),
                     'category_id' => $category->id,
-                ]);
+                ];
 
+                $book = new Book($data);
                 $book->save();
             }
         } else {
             foreach ($booksFromForm as $key => $bookId) {
-                $book = Book::find($bookId);
-                $book->update([
-                    'title' => $request->input("book_title.$key"),
-                    'description' => $request->input("book_description.$key"),
-                    'price' => $request->input("book_price.$key"),
-                    'author_id' => $request->input("book_author.$key"),
-                ]);
+                if ($bookId != 0) {
+                    $book = Book::find($bookId);
+                    $book->update([
+                        'title' => $request->input("book_title.$key"),
+                        'description' => $request->input("book_description.$key"),
+                        'price' => $request->input("book_price.$key"),
+                        'author_id' => $request->input("book_author.$key"),
+                    ]);
+                }
             }
+            $category->books()->whereNotIn('id', $booksFromForm)->delete();
+            $category->update($request->all());
         }
-
-//        $data = [
-//            'title' => $request->input("book_titles")[0],
-//            'description' => $request->input("book_descriptions")[0],
-//            'price' => intval($request->input("book_prices")[0]),
-//            'author_id' => intval($request->input("book_authors")[0]),
-//            'category_id' => $category->id,
-//        ];
-//
-//        $book = new Book($data);
-//        $book->save();
-
-        $category->books()->whereNotIn('id', $booksFromForm)->delete();
-        $category->update($request->all());
 
         return redirect()
             ->route('admin.categories.index')
