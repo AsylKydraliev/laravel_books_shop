@@ -8,6 +8,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class AuthorController extends Controller
 {
@@ -46,6 +47,7 @@ class AuthorController extends Controller
         }
 
         $author = new Author($data);
+        $author->user_id = Auth::id();
         $author->save();
 
         return redirect()

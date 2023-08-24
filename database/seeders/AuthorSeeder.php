@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Author;
 use Illuminate\Database\Seeder;
 
-class AuthorTableSeeder extends Seeder
+class AuthorSeeder extends Seeder
 {
     /**
      * Run the database seeds.

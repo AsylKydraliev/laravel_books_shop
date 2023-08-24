@@ -13,16 +13,12 @@
                 <hr>
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
-                    <input
+                    <x-base-input
                         type="text"
                         id="title"
                         name="title"
-                        value="{{ old('title') }}"
-                        class="form-control @error('title') is-invalid @enderror"
+                        :value="{{ old('title') }}"
                     />
-                    @error('title')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
                 </div>
 
                 <div class="mb-3">

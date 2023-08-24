@@ -16,6 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('image')->nullable();
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete()
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

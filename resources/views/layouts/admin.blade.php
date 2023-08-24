@@ -7,8 +7,10 @@
     <title>Laravel</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-    <script src="{{ mix('js/app.js') }}"></script>
+{{--    <script src="{{ mix('js/app.js') }}"></script>--}}
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    @stack('scripts')
 </head>
 <body class="antialiased">
 <nav class="navbar navbar-expand-lg bg-body-secondary py-3 mb-5">

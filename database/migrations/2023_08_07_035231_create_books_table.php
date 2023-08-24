@@ -24,6 +24,11 @@ return new class extends Migration
                 ->constrained()
                 ->nullOnDelete()
                 ->onUpdate('cascade');
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete()
+                ->onUpdate('cascade');
             $table->string('image')->nullable();
             $table->timestamps();
         });

@@ -54,6 +54,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category): \Illuminate\Foundation\Application|View|Factory|Application
     {
+//        dd(session());
         $authors = Author::all();
         $category->load('books.author');
 
@@ -67,45 +68,40 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category): RedirectResponse
     {
-        $booksFromForm = $request->get('book_ids');
+        $currentBookIds = $category->books()->pluck('id')->toArray();
+        $booksFromForm = $request->input('book_ids');
+        $booksToInsert = [];
 
-        if(in_array(0, $booksFromForm)) {
-            $bookTitles = $request->input('book_titles');
-            $bookDescriptions = $request->input('book_descriptions');
-            $bookPrices = $request->input('book_prices');
-            $bookAuthors = $request->input('book_authors');
+        foreach ($booksFromForm as $key => $bookId) {
+            $data = [
+                'title' => $request->input("book_title.$key"),
+                'description' => $request->input("book_description.$key"),
+                'price' => intval($request->input("book_price.$key")),
+                'author_id' => intval($request->input("book_author.$key")),
+            ];
 
-            foreach ($bookTitles as $key => $title) {
-                $description = $bookDescriptions[$key];
-                $price = $bookPrices[$key];
-                $authorId = $bookAuthors[$key];
-
-                $data = [
-                    'title' => $title,
-                    'description' => $description,
-                    'price' => intval($price),
-                    'author_id' => intval($authorId),
-                    'category_id' => $category->id,
-                ];
-
-                $book = new Book($data);
-                $book->save();
+            if ($bookId == 0) {
+                $booksToInsert[] = $data;
+            } else {
+                $book = Book::find($bookId);
+                $book->update($data);
             }
-        } else {
-            foreach ($booksFromForm as $key => $bookId) {
-                if ($bookId != 0) {
-                    $book = Book::find($bookId);
-                    $book->update([
-                        'title' => $request->input("book_title.$key"),
-                        'description' => $request->input("book_description.$key"),
-                        'price' => $request->input("book_price.$key"),
-                        'author_id' => $request->input("book_author.$key"),
-                    ]);
-                }
-            }
-            $category->books()->whereNotIn('id', $booksFromForm)->delete();
-            $category->update($request->all());
         }
+
+        if (!empty($booksToInsert)) {
+            $category->books()->createMany($booksToInsert);
+        }
+
+        $differenceIds = array_diff($currentBookIds, $booksFromForm);
+
+        if (!empty($differenceIds)) {
+            $category->books()->whereIn('id', $differenceIds)->delete();
+        }
+
+        $category->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+        ]);
 
         return redirect()
             ->route('admin.categories.index')
