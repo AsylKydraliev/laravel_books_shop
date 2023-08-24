@@ -24,10 +24,9 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
                     <x-base-textarea
                         id="description"
-                        lavel="Description"
+                        label="Description"
                         name="description"
                         :value="old('description') ?? $category->description"
                     />
@@ -54,7 +53,7 @@
                                     Description
                                     <x-base-textarea
                                         id="book_description"
-                                        name="new_book_description[]"
+                                        name="new_book_description"
                                         cols="70"
                                         rows="1"
                                     />
@@ -64,14 +63,14 @@
                                     <x-base-input
                                         type="number"
                                         id="book_price"
-                                        name="new_book_price[]"
+                                        name="new_book_price"
                                     />
                                 </th>
                                 <th scope="col">
                                     Author
                                     <x-base-select
                                         id="book_author"
-                                        name="new_book_author[]"
+                                        name="new_book_author"
                                     >
                                         <option value="" disabled selected>Select author</option>
                                         @foreach($authors as $option)
@@ -104,17 +103,17 @@
                                     </td>
                                     <td>
                                         <x-base-textarea
-                                            name="book_description[]"
+                                            name="book_description"
                                             cols="70"
                                             rows="3"
-                                            value="{{ $book->description }}"
+                                            value="{{ old('book_description.'.$key) ?? $book->description }}"
                                         />
                                     </td>
                                     <td>
                                         <x-base-input
                                             type="number"
                                             name="book_price[]"
-                                            value="{{ $book->price }}"
+                                            value="{{ old('book_price.'.$key) ?? $book->price }}"
                                         />
                                     </td>
                                     <td>

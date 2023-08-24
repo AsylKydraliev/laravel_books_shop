@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthorRequest;
 use App\Models\Author;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -57,10 +58,12 @@ class AuthorController extends Controller
 
     /**
      * @param Author $author
-     * @return Application|Factory|View|\Illuminate\Foundation\Application
+     * @return \Illuminate\Foundation\Application|View|Factory|Application
+     * @throws AuthorizationException
      */
     public function edit(Author $author): \Illuminate\Foundation\Application|View|Factory|Application
     {
+        $this->authorize('update', $author);
         return view('admin.authors.edit', compact('author'));
     }
 
@@ -68,9 +71,11 @@ class AuthorController extends Controller
      * @param AuthorRequest $request
      * @param Author $author
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(AuthorRequest $request, Author $author): RedirectResponse
     {
+        $this->authorize('update', $author);
         $data = $request->all();
         $file = $request->file('image');
 
@@ -89,9 +94,11 @@ class AuthorController extends Controller
     /**
      * @param Author $author
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function destroy(Author $author): RedirectResponse
     {
+        $this->authorize('delete', $author);
         $author->delete();
 
         return redirect()

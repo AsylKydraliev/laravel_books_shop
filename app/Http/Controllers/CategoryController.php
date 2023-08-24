@@ -6,6 +6,7 @@ use App\Http\Requests\CategoryRequest;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -50,11 +51,12 @@ class CategoryController extends Controller
 
     /**
      * @param Category $category
-     * @return Application|Factory|View|\Illuminate\Foundation\Application
+     * @return \Illuminate\Foundation\Application|View|Factory|Application
+     * @throws AuthorizationException
      */
     public function edit(Category $category): \Illuminate\Foundation\Application|View|Factory|Application
     {
-//        dd(session());
+        $this->authorize('update', $category);
         $authors = Author::all();
         $category->load('books.author');
 
@@ -65,9 +67,11 @@ class CategoryController extends Controller
      * @param CategoryRequest $request
      * @param Category $category
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(CategoryRequest $request, Category $category): RedirectResponse
     {
+        $this->authorize('update', $category);
         $currentBookIds = $category->books()->pluck('id')->toArray();
         $booksFromForm = $request->input('book_ids');
         $booksToInsert = [];
@@ -111,9 +115,11 @@ class CategoryController extends Controller
     /**
      * @param Category $category
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function destroy(Category $category): RedirectResponse
     {
+        $this->authorize('delete', $category);
         $category->delete();
 
         return redirect()
