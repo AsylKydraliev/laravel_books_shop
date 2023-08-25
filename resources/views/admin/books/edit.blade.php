@@ -2,18 +2,28 @@
 
 @section('content')
     <div class="container">
-        <a href="{{ url()->previous() }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
+        <a href="{{ route('admin.books.index') }}" class="btn btn-outline-primary mb-3">&lang; Back</a>
         <div class="row">
+            <ul class="nav nav-tabs mb-4">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#edit"><h5>Edit book</h5></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#history"><h5>Book history</h5></a>
+                </li>
+            </ul>
+
             <form
                 action="{{ route('admin.books.update', ['book' => $book]) }}"
                 method="post"
                 enctype="multipart/form-data"
+                id="edit"
+                class="tab-content"
             >
                 @csrf
                 @method('PUT')
 
-                <h4>Edit book</h4>
-                <hr>
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input
@@ -56,12 +66,12 @@
 
                 <div class="mb-3">
                     @if($book->image)
-                    <img
-                        class="mb-2 d-block"
-                        width="100"
-                        src="{{ str_contains($book->image, 'images') ? "/storage/$book->image" : $book->image }}"
-                        alt="{{ $book->title }}"
-                    >
+                        <img
+                            class="mb-2 d-block"
+                            width="100"
+                            src="{{ str_contains($book->image, 'images') ? "/storage/$book->image" : $book->image }}"
+                            alt="{{ $book->title }}"
+                        >
                     @endif
                     <label for="file" class="form-label">Image</label>
                     <input
@@ -87,7 +97,7 @@
                         @foreach($authors as $author)
                             <option
                                 @if($book->author && $author->id == $book->author->id) selected @endif
-                                value="{{ $author->id }}"
+                            value="{{ $author->id }}"
                             >
                                 {{ $author->name }}
                             </option>
@@ -125,6 +135,37 @@
 
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
+
+            <div id="history" class="tab-content" style="display: none;">
+                    <div class="col">
+                        <table class="table align-middle">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Changes</th>
+                                <th scope="col">Created at</th>
+                                <th scope="col">Updated at</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($book->logs as $log)
+                                <tr>
+                                    <th scope="row">{{ $log->id }}</th>
+                                    <td>{{ $log->user->name ?? '' }}</td>
+                                    <td>{{ $log->content }}</td>
+                                    <td>{{ $log->created_at }}</td>
+                                    <td>{{ $log->updated_at }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    @vite(['resources/js/books/tabs.js'])
+@endpush

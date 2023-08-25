@@ -30,46 +30,47 @@
                     </thead>
                     <tbody>
                     @foreach($books as $book)
-                    <tr>
-                        <th scope="row">{{ $book->id }}</th>
-                        <td>{{ $book->title }}</td>
-                        <td>{{ $book->description }}</td>
-                        <td>{{ $book->price }}</td>
-                        <td>{{ $book->category->title ?? 'not category' }}</td>
-                        <td>{{ $book->author->name ?? 'not author' }}</td>
-                        <td>
-                            @if($book->image)
-                                <img
-                                    width="100"
-                                    src="{{ str_contains($book->image, 'images') ? "/storage/$book->image" : $book->image }}"
-                                    alt="{{ $book->title }}"
-                                />
-                            @else
-                                No image
-                            @endif
-                        </td>
-                        <td>
-                            <a href="{{ route('admin.books.edit', ['book' => $book]) }}" class="btn btn-warning d-block">Edit</a>
+                        <tr>
+                            <th scope="row">{{ $book->id }}</th>
+                            <td>{{ $book->title }}</td>
+                            <td>{{ $book->description }}</td>
+                            <td>{{ $book->price }}</td>
+                            <td>{{ $book->category->title ?? 'not category' }}</td>
+                            <td>{{ $book->author->name ?? 'not author' }}</td>
+                            <td>
+                                @if($book->image)
+                                    <img
+                                        width="100"
+                                        src="{{ str_contains($book->image, 'images') ? "/storage/$book->image" : $book->image }}"
+                                        alt="{{ $book->title }}"
+                                    />
+                                @else
+                                    No image
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.books.edit', ['book' => $book]) }}"
+                                   class="btn btn-warning d-block">Edit</a>
 
-                            <form
-                                action="{{ route('admin.books.destroy', ['book' => $book]) }}"
-                                method="post"
-                                class="d-inline-block mt-1"
-                            >
-                                @csrf
-                                @method('delete')
+                                <form
+                                    action="{{ route('admin.books.destroy', ['book' => $book]) }}"
+                                    method="post"
+                                    class="d-inline-block mt-1"
+                                >
+                                    @csrf
+                                    @method('delete')
 
-                                <button class="btn btn-danger" type="submit">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
                     @endforeach
                     </tbody>
-                        <tfoot>
-                            <tr>
-                                <th colspan="8">{{ $books->links() }}</th>
-                            </tr>
-                        </tfoot>
+                    <tfoot>
+                    <tr>
+                        <th colspan="8">{{ $books->links() }}</th>
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

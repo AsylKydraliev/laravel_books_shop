@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\BookCreated;
+use App\Listeners\BookCreatedListener;
+use App\Models\Book;
+use App\Observers\BookObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        BookCreated::class => [
+            BookCreatedListener::class
+        ]
     ];
 
     /**
@@ -25,7 +32,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Book::observe(new BookObserver());
     }
 
     /**

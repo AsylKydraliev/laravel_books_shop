@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 /**
  * @property int $id
  * @property string $title
@@ -19,10 +21,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read Category|null $category
  * @property-read Author|null $author
  * @property-read User|null $user
+ * @property-read BookLog|null $bookLog
  *
  * @mixin Builder
  */
-
 class Book extends Model
 {
     use HasFactory;
@@ -59,5 +61,13 @@ class Book extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function logs(): HasMany
+    {
+        return $this->hasMany(BookLog::class);
     }
 }

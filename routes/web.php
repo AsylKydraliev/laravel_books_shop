@@ -22,3 +22,4 @@ Route::middleware('auth.basic.once')->prefix('admin')->name('admin.')->group(fun
     Route::resource('authors', AuthorController::class);
 });
 
+

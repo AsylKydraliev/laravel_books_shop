@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Book;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Access\Response;
 
 class BookPolicy
@@ -15,7 +16,15 @@ class BookPolicy
      */
     public function update(User $user, Book $book): bool
     {
-        return $user->id === $book->user_id;
+        $currentDateTime = Carbon::now();
+        $createdAt = Carbon::parse($book->created_at);
+        $daysDifference = $currentDateTime->diffInDays($createdAt);
+
+        if($daysDifference > 1) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -25,6 +34,10 @@ class BookPolicy
      */
     public function delete(User $user, Book $book): bool
     {
-        return $user->id === $book->user_id;
+        if($book->price > 500) {
+            return false;
+        }
+
+        return true;
     }
 }

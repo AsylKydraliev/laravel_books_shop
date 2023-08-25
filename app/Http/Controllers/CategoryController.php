@@ -52,11 +52,9 @@ class CategoryController extends Controller
     /**
      * @param Category $category
      * @return \Illuminate\Foundation\Application|View|Factory|Application
-     * @throws AuthorizationException
      */
     public function edit(Category $category): \Illuminate\Foundation\Application|View|Factory|Application
     {
-        $this->authorize('update', $category);
         $authors = Author::all();
         $category->load('books.author');
 
