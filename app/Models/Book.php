@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\BookCreated;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -69,5 +70,17 @@ class Book extends Model
     public function logs(): HasMany
     {
         return $this->hasMany(BookLog::class);
+    }
+
+    /**
+     * @return void
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::created(function ($book) {
+            event(new BookCreated($book));
+        });
     }
 }
