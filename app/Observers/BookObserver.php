@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Events\BookCreated;
 use App\Models\Book;
 use Illuminate\Support\Facades\Auth;
 

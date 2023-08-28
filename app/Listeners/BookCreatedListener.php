@@ -3,8 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\BookCreated;
-use App\Mail\YourEmailMailable;
-use Illuminate\Support\Facades\Http;
+use App\Mail\EmailMailable;
 use Illuminate\Support\Facades\Mail;
 
 class BookCreatedListener
@@ -17,7 +16,6 @@ class BookCreatedListener
     public function handle(BookCreated $event): void
     {
         $to = 'recipient@example.com';
-
-        Mail::to($to)->send(new YourEmailMailable());
+        Mail::to($to)->send(new EmailMailable($event->book));
     }
 }

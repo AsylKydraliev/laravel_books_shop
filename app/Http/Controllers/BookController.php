@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\BookCreated;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Author;
@@ -66,8 +65,6 @@ class BookController extends Controller
 
         $book = new Book($data);
         $book->save();
-
-        event(new BookCreated($book));
 
         return redirect()
             ->route('admin.books.index')
