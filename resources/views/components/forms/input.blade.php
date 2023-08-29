@@ -7,7 +7,9 @@
         id="{{ $id }}"
         name="{{ $name }}"
         value="{{ $value }}"
-        class="form-control @error($name) is-invalid @enderror"
+        placeholder="{{ $placeholder }}"
+        form="{{ $form }}"
+        class="{{ $class }} @error($name) is-invalid @enderror"
     />
     @error($name)
         <small class="text-danger">{{ $message }}</small>

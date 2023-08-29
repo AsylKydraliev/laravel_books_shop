@@ -11,6 +11,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -20,14 +21,13 @@ class BookController extends Controller
         $this->middleware('can:delete,book')->only('destroy');
     }
 
-    /**
-     * @return Application|Factory|View|\Illuminate\Foundation\Application
-     */
-    public function index(): \Illuminate\Foundation\Application|View|Factory|Application
+    public function index(Request $request)
     {
         $books = Book::query()
             ->with(['category', 'author'])
-            ->paginate(10);
+            ->filter($request->all())
+            ->paginate(10)
+            ->withQueryString();
 
         return view(
             'admin.books.index',

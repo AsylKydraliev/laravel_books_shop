@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-
     @stack('scripts')
 </head>
 <body class="antialiased">
@@ -39,6 +38,5 @@
 </nav>
 
 @yield('content')
-
 </body>
 </html>

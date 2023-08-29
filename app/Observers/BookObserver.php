@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\BookCreated;
 use App\Models\Book;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,6 +27,8 @@ class BookObserver
         ];
 
         $book->logs()->create($bookLog);
+
+        event(new BookCreated($book));
     }
 
     /**
